@@ -23,6 +23,7 @@ module.exports = {
                 loader: 'vue-loader',
                 options: {
 
+                    /*
                     loaders: {
                         // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
                         // the "scss" and "sass" values for the lang attribute to the right configs here.
@@ -31,7 +32,7 @@ module.exports = {
 
                         'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
                     },
-
+                    */
 
 
                     include: [
@@ -92,6 +93,10 @@ if (process.env.NODE_ENV === 'production') {
         }),
         new webpack.LoaderOptionsPlugin({
             minimize: true
-        })
+        }),
+
+        new webpack.optimize.ModuleConcatenationPlugin()
+
+
     ])
 }

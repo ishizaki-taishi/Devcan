@@ -1,9 +1,9 @@
-import Vue from 'vue'
+import Vue from 'vue';
 import Vuex from 'vuex';
-import Vuetify from 'vuetify'
+import Vuetify from 'vuetify';
 
-import App from './App.vue'
-import './stylus/main.styl'
+import App from './App.vue';
+import './stylus/main.styl';
 
 Vue.use(Vuex);
 Vue.use(Vuetify);
@@ -11,4 +11,4 @@ Vue.use(Vuetify);
 new Vue({
     el: '#app',
     render: h => h(App)
-})
+});
