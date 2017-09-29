@@ -2,27 +2,24 @@
 <div>
 
 
-    <v-data-table :headers="headers" :items="items" hide-actions class="elevation-1">
+    <v-data-table :headers="headers" :items="currentDevices" hide-actions class="elevation-1">
 
 
         <template slot="items" scope="props">
 
-                    <td>
-                        <v-checkbox
-                        primary
-                        hide-details
-                        :input-value="true"
-                       ></v-checkbox>
-                    </td>
 
-                    <td class="text-xs-right">{{ props.item.deviceId }}</td>
-                    <td class="text-xs-right">{{ props.item.os }}</td>
-                    <td class="text-xs-right">{{ props.item.osVersion }}</td>
-                    <td class="text-xs-right">{{ props.item.deviceName }}</td>
-                    <td class="text-xs-right">{{ props.item.employeeId }}</td>
-                    <td class="text-xs-right">{{ props.item.employeeName }}</td>
+            <td>
+                <v-checkbox primary hide-details :input-value="true"></v-checkbox>
+            </td>
 
-                </template>
+            <td class="text-xs-right">{{ props.item.id }}</td>
+            <td class="text-xs-right">{{ props.item.os }}</td>
+            <td class="text-xs-right">{{ props.item.version }}</td>
+            <td class="text-xs-right">{{ props.item.name }}</td>
+            <td class="text-xs-right">{{ props.item.userId }}</td>
+            <td class="text-xs-right">{{ props.item.userName }}</td>
+
+        </template>
     </v-data-table>
 
 
@@ -50,29 +47,16 @@ const items = devices.map((device) => ({
 }));
 
 
+import { mapGetters } from 'vuex';
+
 
 export default {
 
-    data() {
-        return {
-
-            headers: [
-                { text: '', sortable: false },
-                { text: 'Device ID', value: 'a' },
-                { text: 'OS', value: 'b' },
-                { text: 'OS Version' },
-                { text: 'Device Name' },
-                { text: 'Employee ID' },
-                { text: 'Employee Name' },
-
-                /* , align: 'left', sortable: false */
-
-            ],
-
-            items: items
-        }
-
+    props: {
+        tab: String
     },
+
+    computed: mapGetters(['headers', 'devices', 'currentDevices', 'iosDevices']),
 
     components: {},
 }

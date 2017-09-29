@@ -63,34 +63,34 @@
     <main>
 
 
-
         <template>
-            <v-tabs dark fixed centered>
+            <v-tabs dark fixed centered @input="updateTab">
+
                 <v-toolbar class="cyan">
-                  <v-text-field solo label="Search" append-icon="keyboard_voice" prepend-icon="search"></v-text-field>
-                  <v-tabs-bar class="cyan" slot="extension">
+                    <v-text-field solo label="Search" append-icon="keyboard_voice" prepend-icon="search"></v-text-field>
+                        <v-tabs-bar class="cyan" slot="extension">
 
 
-                      <v-tabs-slider class="yellow"></v-tabs-slider>
-                      <v-tabs-item v-for="(tab, i) in tabs" :key="i" :href="'#tab-' + i">
-                          {{ tab }}
-                      </v-tabs-item>
-                  </v-tabs-bar>
-              </v-toolbar>
-              <v-tabs-items>
+                            <v-tabs-slider class="yellow"></v-tabs-slider>
+                            <v-tabs-item v-for="(tab, i) in tabs" :key="i" :href="`#tab-${tab}`">
+                                {{ tab }}
+                            </v-tabs-item>
+                        </v-tabs-bar>
+                    </v-toolbar>
+                <v-tabs-items>
 
-              <v-tabs-content v-for="i in 3" :key="i" :id="'tab-' + i">
+                    <v-tabs-content v-for="(tab, i) in tabs" :key="i" :id="`tab-${tab}`">
 
-                  <v-card flat>
-                      <v-card-text>
-                          <app-table></app-table>
-                      </v-card-text>
-                  </v-card>
+                        <v-card flat>
+                            <v-card-text>
+                                <app-table :tab="tab"></app-table>
+                            </v-card-text>
+                        </v-card>
 
-              </v-tabs-content>
-          </v-tabs-items>
-      </v-tabs>
-  </template>
+                    </v-tabs-content>
+                </v-tabs-items>
+            </v-tabs>
+        </template>
 
 
 
@@ -131,12 +131,29 @@ const items = [{
     ...Array.from({ length: 10 }).map(() => ({ title: Math.random() }))
 ];
 
+import store from './store/store';
+import { GET_DEVICES, GET_DEVICE_TYPES, TAB_CHANGE } from './store/mutation-types';
+
+import { mapGetters } from 'vuex';
+
 export default {
+
+    /**
+     * 初期化
+     */
+    created() {
+
+        store.dispatch(GET_DEVICES);
+        store.dispatch(GET_DEVICE_TYPES);
+
+    },
+
+    computed: mapGetters(['tabs', 'currentTab']),
 
     data() {
         return {
 
-            tabs: ['all', 'android', 'ios'],
+            items,
 
             clipped: false,
             drawer: false,
@@ -146,6 +163,20 @@ export default {
             right: true,
             rightDrawer: false,
             title: 'Devcan'
+        }
+    },
+
+
+    methods: {
+
+        updateTab(id) {
+
+            const type = id.split('-')[1];
+
+            store.dispatch(TAB_CHANGE, {
+                type
+            });
+
         }
     },
 
