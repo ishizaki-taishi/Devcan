@@ -2,13 +2,10 @@
 <div>
 
 
-    <div id="app">
-        <v-app id="inspire">
-
-            <v-data-table v-bind:headers="headers" :items="items" hide-actions class="elevation-1">
+    <v-data-table :headers="headers" :items="items" hide-actions class="elevation-1">
 
 
-                <template slot="items" scope="props">
+        <template slot="items" scope="props">
 
                     <td>
                         <v-checkbox
@@ -26,12 +23,8 @@
                     <td class="text-xs-right">{{ props.item.employeeName }}</td>
 
                 </template>
-            </v-data-table>
+    </v-data-table>
 
-        </v-app>
-
-
-    </div>
 
 </div>
 </template>
@@ -45,7 +38,7 @@ const items = Array.from({ length: 10 }).map(() => ({
 
     os: selectRandom(['ios', 'android', 'windows']),
     osVersion: (Math.random() * 10).toString().replace('.', '').split('').join('.').substr(0, 5),
-    deviceName: (Math.random() * 100).toString(36).replace('.', ''),
+    deviceName: 'Dev' + (Math.random() * 100).toString(36).replace('.', ''),
 
     employeeId: Math.random() * 700 | 0,
     employeeName: random_name({ seed: Math.random() })
@@ -58,8 +51,6 @@ function selectRandom(array) {
 
 
 
-
-
 export default {
 
     data() {
@@ -69,11 +60,12 @@ export default {
                 { text: '', sortable: false },
                 { text: 'Device ID', value: 'a' },
                 { text: 'OS', value: 'b' },
-                { text: 'OS Version', align: 'left', sortable: false },
+                { text: 'OS Version' },
                 { text: 'Device Name' },
                 { text: 'Employee ID' },
                 { text: 'Employee Name' },
 
+                /* , align: 'left', sortable: false */
 
             ],
 

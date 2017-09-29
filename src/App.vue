@@ -1,7 +1,6 @@
 <template>
 <v-app light>
 
-
     <v-navigation-drawer persistent :clipped="true" enable-resize-watcher>
 
         <v-layout row>
@@ -15,7 +14,7 @@
                         <v-list-tile :key="i" value="true">
 
                             <v-list-tile-content>
-                                <v-list-tile-title v-text="item.title + i.toString()"></v-list-tile-title>
+                                <v-list-tile-title v-text="item.title"></v-list-tile-title>
                             </v-list-tile-content>
 
                         </v-list-tile>
@@ -28,7 +27,6 @@
         </v-layout>
 
     </v-navigation-drawer>
-
 
 
     <v-toolbar fixed>
@@ -57,53 +55,45 @@
 
     </v-toolbar>
 
-    <v-tabs>
 
-        <v-toolbar>
 
-            <v-tabs-bar slot="extension">
-                <v-tabs-slider></v-tabs-slider>
-                <v-tabs-item v-for="i in 5" :key="i" :href="'#tab-' + i">
-                    Item {{ i }}
-                </v-tabs-item>
-            </v-tabs-bar>
 
-        </v-toolbar>
-
-        <v-tabs-items>
-            <v-tabs-content v-for="i in 3" :key="i" :id="'tab-' + i">
-                <v-card flat>
-                    <v-card-text>{{ "text" }}</v-card-text>
-                </v-card>
-            </v-tabs-content>
-        </v-tabs-items>
-    </v-tabs>
 
 
     <main>
-        <v-container fluid>
 
 
 
-
-            <v-slide-y-transition mode="out-in">
-                <v-layout column align-center>
-
-
-
-
-
-                    <app-table></app-table>
-
-                    <!--<img src="/public/v.png" alt="Vuetify.js" class="mb-5" />-->
+        <template>
+            <v-tabs dark fixed centered>
+                <v-toolbar class="cyan">
+                  <v-text-field solo label="Search" append-icon="keyboard_voice" prepend-icon="search"></v-text-field>
+                  <v-tabs-bar class="cyan" slot="extension">
 
 
-                    <blockquote>
-                        test
-                    </blockquote>
+                      <v-tabs-slider class="yellow"></v-tabs-slider>
+                      <v-tabs-item v-for="(tab, i) in tabs" :key="i" :href="'#tab-' + i">
+                          {{ tab }}
+                      </v-tabs-item>
+                  </v-tabs-bar>
+              </v-toolbar>
+              <v-tabs-items>
 
-                </v-layout>
-            </v-slide-y-transition>
+              <v-tabs-content v-for="i in 3" :key="i" :id="'tab-' + i">
+
+                  <v-card flat>
+                      <v-card-text>
+                          <app-table></app-table>
+                      </v-card-text>
+                  </v-card>
+
+              </v-tabs-content>
+          </v-tabs-items>
+      </v-tabs>
+  </template>
+
+
+
 
 
 
@@ -125,7 +115,6 @@
         <span>footer</span>
     </v-footer>
 
-    <br v-for="i in 30">
 
 
 </v-app>
@@ -136,15 +125,19 @@ console.clear();
 
 import AppTable from './Table.vue';
 
-const items = Array.from({ length: 10 }).map(() => ({ title: 'test' }));
-
-console.log(AppTable);
-
+const items = [{
+        title: 'Device List'
+    },
+    ...Array.from({ length: 10 }).map(() => ({ title: Math.random() }))
+];
 
 export default {
 
     data() {
         return {
+
+            tabs: ['all', 'android', 'ios'],
+
             clipped: false,
             drawer: false,
             fixed: false,
