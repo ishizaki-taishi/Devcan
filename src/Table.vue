@@ -32,22 +32,22 @@
 <script>
 import random_name from 'node-random-name';
 
-const items = Array.from({ length: 10 }).map(() => ({
-
-    deviceId: Math.random() * 1000 | 0,
-
-    os: selectRandom(['ios', 'android', 'windows']),
-    osVersion: (Math.random() * 10).toString().replace('.', '').split('').join('.').substr(0, 5),
-    deviceName: 'Dev' + (Math.random() * 100).toString(36).replace('.', ''),
-
-    employeeId: Math.random() * 700 | 0,
-    employeeName: random_name({ seed: Math.random() })
-
-}));
-
 function selectRandom(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
+
+import devices from '../devices.json';
+
+const items = devices.map((device) => ({
+
+    deviceId: device.id,
+    os: device.os,
+    osVersion: device.version,
+    deviceName: device.name,
+    employeeId: device.userId, //Math.random() * 700 | 0,
+    employeeName: device.userName, //random_name({ seed: Math.random() })
+
+}));
 
 
 
